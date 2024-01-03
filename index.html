@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Built by Y~C -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body,
+        html {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            background-color: rgb(253, 253, 251);
+            ;
+        }
+
+        .boards {
+            width: 49.5%;
+            height: 100%;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        .input {
+            background-color: rgb(253, 253, 251);
+            float: left;
+            text-align: center;
+        }
+
+        .output {
+            background-color: rgb(243, 242, 242);
+            float: right;
+        }
+
+        .input button {
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 12pt;
+            background-color: rgb(243, 242, 243);
+            cursor: pointer;
+            border-radius: 20px;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+
+        .input button:hover {
+            background-color: rgb(250, 250, 250);
+        }
+
+        textarea {
+            width: 90%;
+            height: 400px;
+            resize: none;
+            display: block;
+            margin: auto;
+        }
+
+        .big-small-btn {
+            position: absolute;
+            display: inline-block;
+            font-size: 16pt;
+            padding: 10px;
+            background-color: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 3px;
+            color: rgb(167, 165, 165);
+            transition: color 0.3s;
+        }
+
+        .big-small-btn:hover {
+            text-shadow: 0px 0px 0px grey;
+            color: rgb(109, 108, 108);
+        }
+
+        .output pre {
+            margin: 50px auto;
+            height: 87%;
+            width: 90%;
+            background-color: white;
+            padding: 20px;
+            font-size: 12pt;
+            overflow: scroll;
+        }
+
+        .error {
+            font-size: 12pt;
+            font-family: Arial, Helvetica, sans-serif;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <title>JSON parser</title>
+</head>
+
+<body onload="example()">
+    <div class="boards input">
+        <button onclick="fixJson()">parse JSON</button>
+        <textarea id=""></textarea>
+        <p class="error"></p>
+    </div>
+    <div class="boards output">
+        <div class="big-small-btn" onclick="closeOpen()">
+        </div>
+        <pre>
+
+        </pre>
+    </div>
+    <script>
+
+        let close = false;
+        const closeOpen = () => {
+            let input = document.querySelector('.input');
+            let output = document.querySelector('.output');
+            let btn = document.querySelector('.big-small-btn');
+            if (close) {
+                input.style.display = 'block';
+                output.style.width = '49.5%';
+                btn.innerHTML = '<<';
+                close = false;
+            }
+            else {
+                input.style.display = 'none';
+                output.style.width = '100%';
+                btn.innerHTML = '>>'
+                close = true;
+            }
+        }
+
+        const fixJson = () => {
+            try {
+                document.querySelector(".error").innerHTML = '';
+
+                let json = JSON.parse(document.querySelector('textarea').value.replaceAll("\u000d", "").replaceAll("\u000a", ""));
+
+                document.querySelector('pre').innerHTML = JSON.stringify(json, null, 7);
+            }
+            catch (err) {
+                document.querySelector(".error").innerHTML = err;
+            }
+        }
+
+        const example = () => {
+            let obj = `[{"name":"Ben Laden","age":148,"addres":"Hell","live":false},{"name":"Nassrallah","age":724,"addres":"Underground","live":true},{"name":"Muhammad Def","age":94,"addres":"Gaza","live":null}]`;
+            document.querySelector('textarea').value = obj;
+            document.querySelector(".input button").click();
+        }
+
+    </script>
+</body>
+
+</html>
