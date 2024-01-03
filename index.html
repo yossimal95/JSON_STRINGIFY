@@ -103,52 +103,54 @@
     </div>
     <div class="boards output">
         <div class="big-small-btn" onclick="closeOpen()">
-        </div>
-        <pre>
+            << </div>
+                <pre>
 
         </pre>
-    </div>
-    <script>
+        </div>
+        <script>
 
-        let close = false;
-        const closeOpen = () => {
-            let input = document.querySelector('.input');
-            let output = document.querySelector('.output');
-            let btn = document.querySelector('.big-small-btn');
-            if (close) {
-                input.style.display = 'block';
-                output.style.width = '49.5%';
-                btn.innerHTML = '<<';
-                close = false;
+            let close = false;
+            const closeOpen = () => {
+                let input = document.querySelector('.input');
+                let output = document.querySelector('.output');
+                let btn = document.querySelector('.big-small-btn');
+                if (close) {
+                    input.style.display = 'block';
+                    output.style.width = '49.5%';
+                    btn.innerHTML = '<<';
+                    close = false;
+                }
+                else {
+                    input.style.display = 'none';
+                    output.style.width = '100%';
+                    btn.innerHTML = '>>'
+                    close = true;
+                }
             }
-            else {
-                input.style.display = 'none';
-                output.style.width = '100%';
-                btn.innerHTML = '>>'
-                close = true;
+
+            const fixJson = () => {
+                try {
+                    document.querySelector(".error").innerHTML = '';
+
+                    let json = JSON.parse(document.querySelector('textarea').value.replaceAll("\u000d", "").replaceAll("\u000a", ""));
+
+                    console.log(json);
+
+                    document.querySelector('pre').innerHTML = JSON.stringify(json, null, 7);
+                }
+                catch (err) {
+                    document.querySelector(".error").innerHTML = err;
+                }
             }
-        }
 
-        const fixJson = () => {
-            try {
-                document.querySelector(".error").innerHTML = '';
-
-                let json = JSON.parse(document.querySelector('textarea').value.replaceAll("\u000d", "").replaceAll("\u000a", ""));
-
-                document.querySelector('pre').innerHTML = JSON.stringify(json, null, 7);
+            const example = () => {
+                let obj = `[{"name":"Ben Laden","age":148,"addres":"Hell","live":false},{"name":"Nassrallah","age":724,"addres":"Underground","live":true},{"name":"Muhammad Def","age":94,"addres":"Gaza","live":null}]`;
+                document.querySelector('textarea').value = obj;
+                document.querySelector(".input button").click();
             }
-            catch (err) {
-                document.querySelector(".error").innerHTML = err;
-            }
-        }
 
-        const example = () => {
-            let obj = `[{"name":"Ben Laden","age":148,"addres":"Hell","live":false},{"name":"Nassrallah","age":724,"addres":"Underground","live":true},{"name":"Muhammad Def","age":94,"addres":"Gaza","live":null}]`;
-            document.querySelector('textarea').value = obj;
-            document.querySelector(".input button").click();
-        }
-
-    </script>
+        </script>
 </body>
 
 </html>
